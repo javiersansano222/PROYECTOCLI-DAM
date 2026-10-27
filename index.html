@@ -313,6 +313,76 @@
       </div>
     </section>
 
+    <section class="showcase section" id="showcase">
+      <div class="container">
+        <header class="section-head section-head-center">
+          <p class="eyebrow eyebrow-dark">Galería tridimensional</p>
+          <h2>La pieza, desde todos los ángulos</h2>
+          <p class="section-intro">Gira la galería para contemplar algunas de nuestras piezas favoritas. Puedes usar las flechas, los puntos o deslizar con el dedo.</p>
+        </header>
+
+        <div class="showcase-stage" id="showcaseStage" tabindex="0" role="group" aria-roledescription="carrusel 3D" aria-label="Galería tridimensional de piezas destacadas">
+          <div class="showcase-ring" id="showcaseRing">
+            <article class="showcase-item is-active" data-name="Sofá Duquesa" style="--i: 0">
+              <img src="https://images.unsplash.com/photo-1577103032015-92adcd22ce22?auto=format&fit=crop&w=700&q=80" alt="Sofá Duquesa de tres plazas en tono beige" loading="lazy">
+              <div class="showcase-caption">
+                <span>Salón</span>
+                <strong>Sofá Duquesa</strong>
+              </div>
+            </article>
+            <article class="showcase-item" data-name="Mesa Borgoña" style="--i: 1">
+              <img src="https://images.unsplash.com/photo-1759774311786-86e478488260?auto=format&fit=crop&w=700&q=80" alt="Mesa de comedor Borgoña de madera maciza" loading="lazy">
+              <div class="showcase-caption">
+                <span>Comedor</span>
+                <strong>Mesa Borgoña</strong>
+              </div>
+            </article>
+            <article class="showcase-item" data-name="Cama Versalles" style="--i: 2">
+              <img src="https://images.unsplash.com/photo-1775476793313-434a1e12c0dc?auto=format&fit=crop&w=700&q=80" alt="Cama Versalles con cabecero de madera tallada" loading="lazy">
+              <div class="showcase-caption">
+                <span>Dormitorio</span>
+                <strong>Cama Versalles</strong>
+              </div>
+            </article>
+            <article class="showcase-item" data-name="Sofá Chesterfield" style="--i: 3">
+              <img src="https://images.unsplash.com/photo-1647943499244-032308c2088a?auto=format&fit=crop&w=700&q=80" alt="Sofá Chesterfield de cuero marrón" loading="lazy">
+              <div class="showcase-caption">
+                <span>Salón</span>
+                <strong>Sofá Chesterfield</strong>
+              </div>
+            </article>
+            <article class="showcase-item" data-name="Lámpara Candelabro" style="--i: 4">
+              <img src="https://images.unsplash.com/photo-1526568929-7cdd510e77fd?auto=format&fit=crop&w=700&q=80" alt="Lámpara de araña clásica de latón" loading="lazy">
+              <div class="showcase-caption">
+                <span>Iluminación</span>
+                <strong>Lámpara Candelabro</strong>
+              </div>
+            </article>
+            <article class="showcase-item" data-name="Aparador Roble Antiguo" style="--i: 5">
+              <img src="https://images.unsplash.com/photo-1544691560-fc2053d97726?auto=format&fit=crop&w=700&q=80" alt="Aparador de roble antiguo con puertas talladas" loading="lazy">
+              <div class="showcase-caption">
+                <span>Comedor</span>
+                <strong>Aparador Roble Antiguo</strong>
+              </div>
+            </article>
+          </div>
+
+          <button class="showcase-nav showcase-prev" id="showcasePrev" type="button" aria-label="Pieza anterior">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 18l-6-6 6-6"/></svg>
+          </button>
+          <button class="showcase-nav showcase-next" id="showcaseNext" type="button" aria-label="Pieza siguiente">
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+          </button>
+        </div>
+
+        <div class="showcase-controls">
+          <button class="showcase-toggle" id="showcaseToggle" type="button">Pausar rotación</button>
+          <div class="showcase-dots" id="showcaseDots" role="group" aria-label="Seleccionar pieza"></div>
+        </div>
+        <p class="showcase-status" id="showcaseStatus" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+
     <section class="story section" id="nosotros">
       <div class="container story-grid">
         <div class="story-media reveal">
@@ -477,6 +547,7 @@
         <h3>Explorar</h3>
         <ul>
           <li><a href="#coleccion">Colección</a></li>
+          <li><a href="#showcase">Galería 3D</a></li>
           <li><a href="#nosotros">Nosotros</a></li>
           <li><a href="#servicios">Servicios</a></li>
           <li><a href="#testimonios">Testimonios</a></li>

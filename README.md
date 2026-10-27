@@ -35,6 +35,7 @@ Luego visita `http://localhost:8000`.
 ## Funcionalidad
 
 - Catálogo con filtros por categoría y estado sin resultados.
+- Galería 3D giratoria con autoplay, flechas, puntos, teclado y gesto táctil.
 - Modal de detalle de producto con foco accesible.
 - Carrito con cantidades, subtotal y persistencia en `localStorage`.
 - Menú móvil, carrusel de testimonios y animaciones con `IntersectionObserver`.

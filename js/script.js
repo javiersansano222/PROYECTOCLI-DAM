@@ -463,6 +463,138 @@ document.getElementById("testimonialSlider").addEventListener("mouseleave", star
 
 startTestimonialAutoplay();
 
+const showcaseStage = document.getElementById("showcaseStage");
+const showcaseRing = document.getElementById("showcaseRing");
+const showcaseItems = Array.from(document.querySelectorAll(".showcase-item"));
+const showcaseDotsEl = document.getElementById("showcaseDots");
+const showcasePrev = document.getElementById("showcasePrev");
+const showcaseNext = document.getElementById("showcaseNext");
+const showcaseToggle = document.getElementById("showcaseToggle");
+const showcaseStatus = document.getElementById("showcaseStatus");
+const showcaseStep = showcaseItems.length ? 360 / showcaseItems.length : 0;
+const prefersReducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+let showcaseIndex = 0;
+let showcaseTimer = null;
+let showcasePlaying = !prefersReducedMotion;
+let showcaseStartX = null;
+
+const showcaseDots = showcaseItems.map((item, index) => {
+  const dot = document.createElement("button");
+  dot.type = "button";
+  dot.className = "showcase-dot";
+  dot.setAttribute("aria-label", `Ver ${item.dataset.name}`);
+  dot.addEventListener("click", () => {
+    showShowcase(index);
+    if (showcasePlaying) startShowcase();
+  });
+  showcaseDotsEl.append(dot);
+  return dot;
+});
+
+function showShowcase(index, announce = true) {
+  if (!showcaseItems.length) return;
+  showcaseIndex = (index + showcaseItems.length) % showcaseItems.length;
+  showcaseRing.style.setProperty("--ring-rotation", `${-showcaseIndex * showcaseStep}deg`);
+  showcaseItems.forEach((item, i) => item.classList.toggle("is-active", i === showcaseIndex));
+  showcaseDots.forEach((dot, i) => {
+    dot.classList.toggle("is-active", i === showcaseIndex);
+    dot.setAttribute("aria-current", i === showcaseIndex ? "true" : "false");
+  });
+  if (announce) {
+    showcaseStatus.textContent = `${showcaseItems[showcaseIndex].dataset.name} · ${showcaseIndex + 1} de ${showcaseItems.length}`;
+  }
+}
+
+function stopShowcase() {
+  window.clearInterval(showcaseTimer);
+  showcaseTimer = null;
+}
+
+function startShowcase() {
+  stopShowcase();
+  if (!showcasePlaying || prefersReducedMotion) return;
+  showcaseTimer = window.setInterval(() => {
+    showShowcase(showcaseIndex + 1, false);
+  }, 4500);
+}
+
+function setShowcasePlaying(value) {
+  showcasePlaying = value;
+  showcaseToggle.textContent = value ? "Pausar rotación" : "Reanudar rotación";
+  if (value) {
+    startShowcase();
+  } else {
+    stopShowcase();
+  }
+}
+
+function stepShowcase(delta) {
+  showShowcase(showcaseIndex + delta);
+  if (showcasePlaying) startShowcase();
+}
+
+showcasePrev.addEventListener("click", () => stepShowcase(-1));
+showcaseNext.addEventListener("click", () => stepShowcase(1));
+showcaseToggle.addEventListener("click", () => setShowcasePlaying(!showcasePlaying));
+
+showcaseStage.addEventListener("keydown", (event) => {
+  if (event.key === "ArrowLeft") {
+    event.preventDefault();
+    stepShowcase(-1);
+  } else if (event.key === "ArrowRight") {
+    event.preventDefault();
+    stepShowcase(1);
+  } else if (event.key === "Home") {
+    event.preventDefault();
+    stepShowcase(-showcaseIndex);
+  } else if (event.key === "End") {
+    event.preventDefault();
+    stepShowcase(showcaseItems.length - 1 - showcaseIndex);
+  }
+});
+
+showcaseStage.addEventListener("pointerdown", (event) => {
+  if (event.pointerType === "mouse" && event.button !== 0) return;
+  showcaseStartX = event.clientX;
+  stopShowcase();
+});
+
+showcaseStage.addEventListener("pointerup", (event) => {
+  if (showcaseStartX === null) return;
+  const distance = event.clientX - showcaseStartX;
+  showcaseStartX = null;
+  if (Math.abs(distance) > 40) {
+    stepShowcase(distance < 0 ? 1 : -1);
+  } else if (showcasePlaying) {
+    startShowcase();
+  }
+});
+
+showcaseStage.addEventListener("pointercancel", () => {
+  showcaseStartX = null;
+});
+
+showcaseStage.addEventListener("dragstart", (event) => event.preventDefault());
+showcaseStage.addEventListener("mouseenter", stopShowcase);
+showcaseStage.addEventListener("mouseleave", () => {
+  if (showcasePlaying) startShowcase();
+});
+showcaseStage.addEventListener("focusin", stopShowcase);
+showcaseStage.addEventListener("focusout", (event) => {
+  if (!showcaseStage.contains(event.relatedTarget) && showcasePlaying) startShowcase();
+});
+
+document.addEventListener("visibilitychange", () => {
+  if (document.hidden) {
+    stopShowcase();
+  } else if (showcasePlaying) {
+    startShowcase();
+  }
+});
+
+showShowcase(0, false);
+setShowcasePlaying(showcasePlaying);
+
 function setFieldError(input, message) {
   const field = input.closest(".field");
   field.classList.toggle("has-error", Boolean(message));
